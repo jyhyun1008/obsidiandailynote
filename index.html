@@ -161,7 +161,7 @@ const RTNS=[
 const MTYPES=['아침','점심','저녁','간식'];
 let off=0, D={}, saveT=null, uid=1;
 
-function mkDate(o){const d=new Date();d.setDate(d.getDate()+o);return d.toISOString().split('T')[0]}
+function mkDate(o){const d=new Date();d.setDate(d.getDate()+o);const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${day}`}
 function dkey(o){return'daily:'+mkDate(o)}
 function defD(){return{mood:'',routines:Object.fromEntries(RTNS.map(r=>[r.k,false])),todos:[],meals:[],expenses:[],hobby:'',health:''}}
 function nid(){return++uid}
