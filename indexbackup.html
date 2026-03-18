@@ -1,36 +1,56 @@
 <style>
-    @font-face {
-    font-family: 'OngleipKonkon';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2') format('woff2');
-    font-weight: normal;
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-3Light.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-6SemiBold.woff2') format('woff2');
+    font-weight: 700;
     font-display: swap;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0d0d1a;--card:#ffffff0d;--border:#ffffff15;--text:#e8e8f0;--muted:#ffffff55}
-body{font-family:'OngleipKonkon',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:16px}
+body{font-family:'A2z',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:16px}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-thumb{background:#ffffff25;border-radius:4px}
 ::-webkit-scrollbar-track{background:transparent}
 
+#background {
+  width: 100vw;
+  height: 100dvh;
+  position: fixed;
+  filter:brightness(25%);
+}
+
+#background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* HEADER */
-#hdr{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:linear-gradient(135deg,#4f46e5,#7c3aed,#db2777);flex-shrink:0;gap:12px}
+#hdr{position: relative; z-index: 9; display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:linear-gradient(135deg,#4f46e5,#7c3aed,#db2777);flex-shrink:0;gap:12px}
 .nav-grp{display:flex;align-items:center;gap:6px}
-.nbtn{background:#ffffff22;border:none;border-radius:7px;color:white;cursor:pointer;font-size:15px;font-weight:600;padding:5px 12px;transition:all .2s}
+.nbtn{background:#ffffff22;border:none;border-radius:7px;color:white;cursor:pointer;font-size:12px;font-weight:600;padding:5px 12px;transition:all .2s}
 .nbtn:hover{background:#ffffff35}
 .nbtn.on{background:white;color:#4f46e5}
 #ddisp{font-size:15px;font-weight:700;color:white;margin-left:6px;white-space:nowrap}
 .hact{display:flex;gap:6px;align-items:center}
-.abtn{border:none;border-radius:7px;cursor:pointer;font-size:15px;font-weight:700;padding:5px 13px;transition:all .2s}
+.abtn{border:none;border-radius:7px;cursor:pointer;font-size:12px;font-weight:700;padding:5px 13px;transition:all .2s}
 .exp-btn{background:#22c55e;color:white}
 .exp-btn:hover{background:#16a34a}
 .clr-btn{background:#ef4444bb;color:white}
 .clr-btn:hover{background:#ef4444}
-#svi{font-size:14px;color:#ffffff60;width:16px;height:16px;border-radius:50%;display:inline-block;background:#ffffff30;transition:background .4s}
+#svi{font-size:11px;color:#ffffff60;width:16px;height:16px;border-radius:50%;display:inline-block;background:#ffffff30;transition:background .4s}
 #svi.saving{background:#f59e0b}
 #svi.saved{background:#22c55e}
 
 /* COLUMNS */
-#cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px;flex:1;overflow:hidden}
+#cols{position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px;flex:1;overflow:hidden}
 .col{display:flex;flex-direction:column;gap:8px;overflow-y:auto;padding-right:2px}
 
 /* CARDS */
@@ -51,22 +71,22 @@ select option{background:#1a1a2e;color:var(--text)}
 
 /* ROUTINE */
 .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.ritem{display:flex;align-items:center;gap:7px;font-size:15px;padding:6px 8px;background:#ffffff07;border-radius:7px;cursor:pointer;transition:background .2s;border:1px solid transparent;user-select:none}
+.ritem{display:flex;align-items:center;gap:7px;font-size:13px;padding:6px 8px;background:#ffffff07;border-radius:7px;cursor:pointer;transition:background .2s;border:1px solid transparent;user-select:none}
 .ritem:hover{background:#ffffff12}
 .ritem.on{background:#22c55e1a;border-color:#22c55e35;color:#4ade80}
 .ritem input[type=checkbox]{width:14px;height:14px;accent-color:#4ade80;cursor:pointer;flex-shrink:0;pointer-events:none}
 
 /* TABLE ROWS */
-.thead{display:grid;gap:4px;font-size:13px;color:var(--muted);margin-bottom:3px;padding:0 2px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.thead{display:grid;gap:4px;font-size:10px;color:var(--muted);margin-bottom:3px;padding:0 2px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
 .trow{display:grid;gap:4px;margin-bottom:4px;align-items:center}
-.trow input,select{padding:4px 6px;font-size:15px}
+.trow input,select{padding:4px 6px;font-size:12px}
 
-.addbtn{background:#ffffff08;border:1px dashed #ffffff22;border-radius:6px;color:var(--muted);cursor:pointer;font-size:14px;padding:5px;width:100%;transition:all .2s;margin-top:3px}
+.addbtn{background:#ffffff08;border:1px dashed #ffffff22;border-radius:6px;color:var(--muted);cursor:pointer;font-size:11px;padding:5px;width:100%;transition:all .2s;margin-top:3px}
 .addbtn:hover{background:#ffffff12;color:var(--text);border-color:#ffffff38}
-.delbtn{background:#ef444420;border:none;border-radius:4px;color:#f87171;cursor:pointer;font-size:14px;padding:3px 5px;flex-shrink:0;transition:background .2s;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.delbtn{background:#ef444420;border:none;border-radius:4px;color:#f87171;cursor:pointer;font-size:11px;padding:3px 5px;flex-shrink:0;transition:background .2s;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
 .delbtn:hover{background:#ef444440}
 
-.sumrow{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:6px 2px 2px;border-top:1px solid var(--border);font-size:15px;font-weight:700;margin-top:4px}
+.sumrow{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:6px 2px 2px;border-top:1px solid var(--border);font-size:12px;font-weight:700;margin-top:4px}
 </style>
 
 <div id="hdr">
@@ -85,31 +105,33 @@ select option{background:#1a1a2e;color:var(--text)}
   </div>
 </div>
 
+<div id="background"><img src="bg.jpg" /></div>
+
 <div id="cols">
   <div class="col" id="c1">
     <div class="card c-mood">
       <div class="ct">💭 오늘의 기분 및 상황</div>
       <textarea id="fmood" rows="5" placeholder="오늘 하루의 기분, 컨디션, 상황을 자유롭게 기록하세요" oninput="setf('mood',this.value)"></textarea>
     </div>
-    <div class="card c-rtn">
-      <div class="ct">✅ 루틴 체크</div>
-      <div class="rgrid" id="rgrid"></div>
-    </div>
     <div class="card c-hlt">
       <div class="ct">🏥 건강 관련 특이사항</div>
       <textarea id="fhlt" rows="4" placeholder="건강 관련 특이사항, 증상, 복용약 메모 등" oninput="setf('health',this.value)"></textarea>
     </div>
+    <div class="card c-hob">
+      <div class="ct">🎮 취미생활</div>
+      <textarea id="fhob" rows="5" placeholder="오늘 즐긴 취미 활동, 게임, 영화, 음악 등을 기록하세요" oninput="setf('hobby',this.value)"></textarea>
+    </div>
   </div>
   <div class="col" id="c2">
+    <div class="card c-rtn">
+      <div class="ct">✅ 루틴 체크</div>
+      <div class="rgrid" id="rgrid"></div>
+    </div>
     <div class="card c-todo">
       <div class="ct">📋 오늘 할 일</div>
       <div class="thead" style="grid-template-columns:1fr 1.4fr 1.4fr 24px"><span>프로젝트</span><span>할 일</span><span>한줄평</span><span></span></div>
       <div id="tlist"></div>
       <button class="addbtn" onclick="addTodo()">＋ 할 일 추가</button>
-    </div>
-    <div class="card c-hob">
-      <div class="ct">🎮 취미생활</div>
-      <textarea id="fhob" rows="5" placeholder="오늘 즐긴 취미 활동, 게임, 영화, 음악 등을 기록하세요" oninput="setf('hobby',this.value)"></textarea>
     </div>
   </div>
   <div class="col" id="c3">
@@ -118,14 +140,14 @@ select option{background:#1a1a2e;color:var(--text)}
       <div class="thead" style="grid-template-columns:64px 1fr 56px 64px 24px"><span>구분</span><span>메뉴</span><span>포만감</span><span>칼로리</span><span></span></div>
       <div id="mlist"></div>
       <button class="addbtn" onclick="addMeal()">＋ 식단 추가</button>
-      <div class="sumrow"><span style="color:var(--muted)">총 칼로리</span><span id="calsum" style="color:#fb923c;font-size:15px">0 kcal</span></div>
+      <div class="sumrow"><span style="color:var(--muted)">총 칼로리</span><span id="calsum" style="color:#fb923c;font-size:13px">0 kcal</span></div>
     </div>
     <div class="card c-exp">
       <div class="ct">💰 소비기록</div>
       <div class="thead" style="grid-template-columns:1fr 76px 1fr 24px"><span>항목</span><span>금액</span><span>구입 사유</span><span></span></div>
       <div id="elist"></div>
       <button class="addbtn" onclick="addExp()">＋ 소비 추가</button>
-      <div class="sumrow"><span style="color:var(--muted)">총 지출</span><span id="expsum" style="color:#f472b6;font-size:15px">0원</span></div>
+      <div class="sumrow"><span style="color:var(--muted)">총 지출</span><span id="expsum" style="color:#f472b6;font-size:13px">0원</span></div>
     </div>
   </div>
 </div>
@@ -139,7 +161,7 @@ const RTNS=[
 const MTYPES=['아침','점심','저녁','간식'];
 let off=0, D={}, saveT=null, uid=1;
 
-function mkDate(o){const d=new Date();d.setDate(d.getDate()+o);return d.toISOString().split('T')[0]}
+function mkDate(o){const d=new Date();d.setDate(d.getDate()+o);const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${day}`}
 function dkey(o){return'daily:'+mkDate(o)}
 function defD(){return{mood:'',routines:Object.fromEntries(RTNS.map(r=>[r.k,false])),todos:[],meals:[],expenses:[],hobby:'',health:''}}
 function nid(){return++uid}
@@ -152,7 +174,7 @@ async function load(o){
   const ds=mkDate(o);
   document.getElementById('ddisp').textContent=ds+' ('+['그저께','어제','오늘'][o+2]+')';
   [-2,-1,0].forEach(x=>{const b=document.getElementById('bn'+Math.abs(x));if(b)b.className='nbtn'+(x===o?' on':'')});
-  try{const r=await window.storage.get(dkey(o));D=r?JSON.parse(r.value):defD()}
+  try{const raw=localStorage.getItem(dkey(o));D=raw?JSON.parse(raw):defD()}
   catch{D=defD()}
   render()
 }
@@ -167,7 +189,7 @@ function render(){
 function renderRtn(){
   document.getElementById('rgrid').innerHTML=RTNS.map(r=>`
     <div class="ritem${D.routines[r.k]?' on':''}" onclick="togRtn('${r.k}')">
-      <input type="checkbox"${D.routines[r.k]?' checked':''} tabindex="-1">
+      <input type="checkbox"${D.routines[r.k]?' checked':''} tabindex="-1" style="pointer-events:none">
       <span>${r.l}</span>
     </div>`).join('')
 }
@@ -233,7 +255,7 @@ function sched(){
 }
 async function save(){
   try{
-    await window.storage.set(dkey(off),JSON.stringify(D));
+    localStorage.setItem(dkey(off),JSON.stringify(D));
     const v=svi();if(v){v.className='saved';setTimeout(()=>{if(v)v.className=''},1800)}
   }catch(e){console.error('save error',e)}
 }
@@ -288,8 +310,7 @@ function doExport(){
 async function doClear(){
   if(!confirm('⚠️ 저장된 모든 날짜의 데이터를 삭제합니다.\n이 작업은 되돌릴 수 없습니다. 계속할까요?'))return;
   try{
-    const res=await window.storage.list('daily:');
-    for(const k of(res.keys||[])){try{await window.storage.delete(k)}catch{}}
+    Object.keys(localStorage).filter(k=>k.startsWith('daily:')).forEach(k=>localStorage.removeItem(k));
     D=defD();render();
     alert('✅ 전체 데이터가 삭제되었습니다.')
   }catch(e){alert('오류가 발생했습니다: '+e.message)}

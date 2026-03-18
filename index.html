@@ -18,22 +18,8 @@ body{font-family:'A2z',system-ui,sans-serif;background:var(--bg);color:var(--tex
 ::-webkit-scrollbar-thumb{background:#ffffff25;border-radius:4px}
 ::-webkit-scrollbar-track{background:transparent}
 
-#background {
-  width: 100vw;
-  height: 100dvh;
-  position: fixed;
-  filter:brightness(25%);
-}
-
-#background img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
 /* HEADER */
-#hdr{position: relative; z-index: 9; display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:linear-gradient(135deg,#4f46e5,#7c3aed,#db2777);flex-shrink:0;gap:12px}
+#hdr{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:linear-gradient(135deg,#4f46e5,#7c3aed,#db2777);flex-shrink:0;gap:12px}
 .nav-grp{display:flex;align-items:center;gap:6px}
 .nbtn{background:#ffffff22;border:none;border-radius:7px;color:white;cursor:pointer;font-size:12px;font-weight:600;padding:5px 12px;transition:all .2s}
 .nbtn:hover{background:#ffffff35}
@@ -50,7 +36,7 @@ body{font-family:'A2z',system-ui,sans-serif;background:var(--bg);color:var(--tex
 #svi.saved{background:#22c55e}
 
 /* COLUMNS */
-#cols{position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px;flex:1;overflow:hidden}
+#cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:10px;flex:1;overflow:hidden}
 .col{display:flex;flex-direction:column;gap:8px;overflow-y:auto;padding-right:2px}
 
 /* CARDS */
@@ -71,7 +57,7 @@ select option{background:#1a1a2e;color:var(--text)}
 
 /* ROUTINE */
 .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.ritem{display:flex;align-items:center;gap:7px;font-size:13px;padding:6px 8px;background:#ffffff07;border-radius:7px;cursor:pointer;transition:background .2s;border:1px solid transparent;user-select:none}
+.ritem{display:flex;align-items:center;gap:7px;font-size:15px;padding:6px 8px;background:#ffffff07;border-radius:7px;cursor:pointer;transition:background .2s;border:1px solid transparent;user-select:none}
 .ritem:hover{background:#ffffff12}
 .ritem.on{background:#22c55e1a;border-color:#22c55e35;color:#4ade80}
 .ritem input[type=checkbox]{width:14px;height:14px;accent-color:#4ade80;cursor:pointer;flex-shrink:0;pointer-events:none}
@@ -104,8 +90,6 @@ select option{background:#1a1a2e;color:var(--text)}
     </div>
   </div>
 </div>
-
-<div id="background"><img src="bg.jpg" /></div>
 
 <div id="cols">
   <div class="col" id="c1">
@@ -153,21 +137,24 @@ select option{background:#1a1a2e;color:var(--text)}
 </div>
 
 <script>
-const RTNS=[
-  {k:'login',l:'🔐 데일리 로그인'},{k:'mmed',l:'💊 아침약'},{k:'emed',l:'🌙 저녁약'},
-  {k:'mex',l:'🏋️ 아침 운동'},{k:'walk',l:'🚶 오후 산책'},{k:'stairs',l:'🏢 계단 오르기'},
-  {k:'read',l:'📚 책읽기'},{k:'c101',l:'🎓 클래스101'}
+const DEF_RTNS=[
+  {k:'login',l:'🔐 데일리 로그인'}
 ];
+let RTNS=[...DEF_RTNS];
 const MTYPES=['아침','점심','저녁','간식'];
 let off=0, D={}, saveT=null, uid=1;
 
 function mkDate(o){const d=new Date();d.setDate(d.getDate()+o);const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${day}`}
 function dkey(o){return'daily:'+mkDate(o)}
 function defD(){return{mood:'',routines:Object.fromEntries(RTNS.map(r=>[r.k,false])),todos:[],meals:[],expenses:[],hobby:'',health:''}}
+function loadRtns(){try{const r=localStorage.getItem('daily:routines');if(r)RTNS=JSON.parse(r)}catch{}}
+function saveRtns(){localStorage.setItem('daily:routines',JSON.stringify(RTNS))}
+function addRtn(){const inp=document.getElementById('newrtn');const l=inp.value.trim();if(!l)return;const k='r'+Date.now();RTNS.push({k,l});if(D.routines[k]===undefined)D.routines[k]=false;saveRtns();inp.value='';renderRtn();sched()}
+function delRtn(k){if(!confirm('루틴을 삭제할까요?'))return;RTNS=RTNS.filter(r=>r.k!==k);delete D.routines[k];saveRtns();renderRtn();sched()}
 function nid(){return++uid}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
-async function init(){await load(0)}
+async function init(){loadRtns();await load(0)}
 
 async function load(o){
   off=o;
@@ -188,10 +175,16 @@ function render(){
 
 function renderRtn(){
   document.getElementById('rgrid').innerHTML=RTNS.map(r=>`
-    <div class="ritem${D.routines[r.k]?' on':''}" onclick="togRtn('${r.k}')">
-      <input type="checkbox"${D.routines[r.k]?' checked':''} tabindex="-1" style="pointer-events:none">
-      <span>${r.l}</span>
-    </div>`).join('')
+    <div class="ritem${D.routines[r.k]?' on':''}" style="justify-content:space-between">
+      <div onclick="togRtn('${r.k}')" style="display:flex;align-items:center;gap:7px;flex:1;cursor:pointer;overflow:hidden">
+        <input type="checkbox"${D.routines[r.k]?' checked':''} tabindex="-1" style="pointer-events:none;flex-shrink:0">
+        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.l}</span>
+      </div>
+      <button class="delbtn" onclick="delRtn('${r.k}')" style="width:18px;height:18px;font-size:11px;margin-left:4px;flex-shrink:0">×</button>
+    </div>`).join('');
+  document.getElementById('rgrid').insertAdjacentHTML('afterend',
+    document.getElementById('rtn-add')?'':'<div id="rtn-add" style="display:flex;gap:6px;margin-top:7px"><input type="text" id="newrtn" placeholder="새 루틴 추가..." style="flex:1"><button class="addbtn" onclick="addRtn()" style="width:auto;padding:5px 14px;margin:0;white-space:nowrap">＋</button></div>'
+  )
 }
 
 function renderTodos(){
@@ -312,6 +305,7 @@ async function doClear(){
   try{
     Object.keys(localStorage).filter(k=>k.startsWith('daily:')).forEach(k=>localStorage.removeItem(k));
     D=defD();render();
+    localStorage.setItem('daily:routines',JSON.stringify(RTNS))
     alert('✅ 전체 데이터가 삭제되었습니다.')
   }catch(e){alert('오류가 발생했습니다: '+e.message)}
 }
